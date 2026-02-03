@@ -2,229 +2,305 @@
 import Layout from "../layouts/Layout.astro";
 
 const projects = [
-    {
-        name: "blog",
-        description: "Persönlicher Tech-Blog mit Hugo",
-        details: "Minimalistischer Blog für Tech-Artikel und Notizen. Statisch generiert, schnell und ohne Tracking.",
-        tech: ["Hugo", "typescript", "tailwind"],
-        link: "https://blog.danfrevel.de",
-        image: "/projects/blog.png",
-        gif: "/projects/blog.gif",
-    },
+  {
+    name: "",
+    description: "",
+    details: "",
+    tech: ["typescript", "tailwind"],
+    link: "",
+    image: "",
+    gif: "",
+  },
+  //   {
+  //     name: "blog",
+  //     description: "Persönlicher Tech-Blog mit Hugo",
+  //     details:
+  //       "Minimalistischer Blog für Tech-Artikel und Notizen. Statisch generiert, schnell und ohne Tracking.",
+  //     tech: ["Hugo", "typescript", "tailwind"],
+  //     link: "https://blog.danfrevel.de",
+  //     image: "/projects/blog.png",
+  //     gif: "/projects/blog.gif",
+  //   },
 ];
 
 const socials = [
-    { name: "GitHub", url: "https://github.com/danielfrevel" },
-    { name: "Email", url: "#", protected: true },
+  { name: "GitHub", url: "https://github.com/danielfrevel" },
+  { name: "Email", url: "#", protected: true },
 ];
 ---
 
 <Layout title="Daniel Frevel">
-    <main class="min-h-screen max-w-2xl mx-auto px-6 py-16">
-        <header class="mb-20">
-            <div class="flex items-baseline gap-4 mb-8">
-                <h1 class="text-5xl font-bold tracking-tight">Daniel Frevel</h1>
-                <div class="flex items-center gap-2">
-                    <p id="weather-status" class="text-sm text-stone-400 dark:text-slate-500 whitespace-nowrap tabular-nums">
-                        <span id="weather-temp">24</span>°C, <span id="weather-desc">sonnig</span>
-                    </p>
-                    <div class="flex items-center gap-1">
-                        <button id="theme-toggle" class="text-stone-400 dark:text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors p-1" title="Wetter wechseln">
-                            <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            <svg id="icon-rain" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 19v2M12 19v2M16 19v2M4 15a4 4 0 014-4h.5a5.5 5.5 0 0111 0H20a4 4 0 010 8H8a4 4 0 01-4-4z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                        <button id="pause-toggle" class="text-stone-400 dark:text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors p-1" title="Animation pausieren">
-                            <svg id="icon-pause" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <rect x="6" y="4" width="4" height="16" rx="1" stroke-width="2"/><rect x="14" y="4" width="4" height="16" rx="1" stroke-width="2"/>
-                            </svg>
-                            <svg id="icon-play" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <polygon points="5,3 19,12 5,21" stroke-width="2" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
+  <main class="min-h-screen max-w-2xl mx-auto px-6 py-16">
+    <header class="mb-20">
+      <div class="flex items-baseline gap-4 mb-8">
+        <h1 class="text-5xl font-bold tracking-tight">Daniel Frevel</h1>
+        <div class="flex items-center gap-2">
+          <p
+            id="weather-status"
+            class="text-sm text-stone-400 dark:text-slate-500 whitespace-nowrap tabular-nums"
+          >
+            <span id="weather-temp">24</span>°C, <span id="weather-desc"
+              >sonnig</span
+            >
+          </p>
+          <div class="flex items-center gap-1">
+            <button
+              id="theme-toggle"
+              class="text-stone-400 dark:text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors p-1"
+              title="Wetter wechseln"
+            >
+              <svg
+                id="icon-sun"
+                class="w-4 h-4 hidden"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="12" r="5"></circle><path
+                  d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                  stroke-width="2"
+                  stroke-linecap="round"></path>
+              </svg>
+              <svg
+                id="icon-rain"
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M8 19v2M12 19v2M16 19v2M4 15a4 4 0 014-4h.5a5.5 5.5 0 0111 0H20a4 4 0 010 8H8a4 4 0 01-4-4z"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <button
+              id="pause-toggle"
+              class="text-stone-400 dark:text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors p-1"
+              title="Animation pausieren"
+            >
+              <svg
+                id="icon-pause"
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <rect x="6" y="4" width="4" height="16" rx="1" stroke-width="2"
+                ></rect><rect
+                  x="14"
+                  y="4"
+                  width="4"
+                  height="16"
+                  rx="1"
+                  stroke-width="2"></rect>
+              </svg>
+              <svg
+                id="icon-play"
+                class="w-4 h-4 hidden"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <polygon
+                  points="5,3 19,12 5,21"
+                  stroke-width="2"
+                  stroke-linejoin="round"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+        {
+          socials.map((social, i) =>
+            social.protected ? (
+              <>
+                <a
+                  href="#"
+                  id="email-link"
+                  class="text-stone-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer"
+                >
+                  {social.name}
+                </a>
+                {i < socials.length - 1 && (
+                  <span class="text-stone-300 dark:text-slate-700">·</span>
+                )}
+              </>
+            ) : (
+              <>
+                <a
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-stone-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                >
+                  {social.name}
+                </a>
+                {i < socials.length - 1 && (
+                  <span class="text-stone-300 dark:text-slate-700">·</span>
+                )}
+              </>
+            ),
+          )
+        }
+      </div>
+    </header>
+
+    <section id="projects" class="mb-16">
+      <h2 class="text-xl font-semibold mb-8 text-stone-600 dark:text-stone-300">
+        Projekte
+      </h2>
+
+      <div class="space-y-6">
+        {
+          projects.map((project) => (
+            <article class="group">
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block p-4 -mx-4 rounded-lg hover:bg-stone-100 dark:hover:bg-slate-900/50 transition-colors"
+              >
+                <div class="flex gap-4">
+                  {(project.image || project.gif) && (
+                    <div class="relative w-32 sm:w-40 h-24 sm:h-28 flex-shrink-0 rounded-md overflow-hidden bg-stone-200 dark:bg-slate-800">
+                      {project.image && (
+                        <img
+                          src={project.image}
+                          alt={project.name}
+                          class={`absolute inset-0 w-full h-full object-cover ${project.gif ? "group-hover:opacity-0" : ""} transition-opacity`}
+                          loading="lazy"
+                        />
+                      )}
+                      {project.gif && (
+                        <img
+                          src={project.gif}
+                          alt={`${project.name} demo`}
+                          class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity"
+                          loading="lazy"
+                        />
+                      )}
                     </div>
+                  )}
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-lg font-medium text-stone-800 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors mb-1">
+                      {project.name}
+                    </h3>
+                    <p class="text-stone-600 dark:text-stone-300 text-sm mb-2">
+                      {project.description}
+                    </p>
+                    {project.details && (
+                      <p class="text-stone-500 dark:text-slate-400 text-sm mb-3">
+                        {project.details}
+                      </p>
+                    )}
+                    <div class="flex flex-wrap gap-2">
+                      {project.tech.map((t) => (
+                        <span class="text-xs text-stone-600 dark:text-stone-400 bg-stone-200 dark:bg-slate-800 px-2 py-1 rounded">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </section>
 
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
-                {
-                    socials.map((social, i) =>
-                        social.protected ? (
-                            <>
-                                <a
-                                    href="#"
-                                    id="email-link"
-                                    class="text-stone-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer"
-                                >
-                                    {social.name}
-                                </a>
-                                {i < socials.length - 1 && <span class="text-stone-300 dark:text-slate-700">·</span>}
-                            </>
-                        ) : (
-                            <>
-                                <a
-                                    href={social.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-stone-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-                                >
-                                    {social.name}
-                                </a>
-                                {i < socials.length - 1 && <span class="text-stone-300 dark:text-slate-700">·</span>}
-                            </>
-                        ),
-                    )
-                }
-            </div>
-        </header>
-
-        <section id="projects" class="mb-16">
-            <h2 class="text-xl font-semibold mb-8 text-stone-600 dark:text-stone-300">Projekte</h2>
-
-            <div class="space-y-6">
-                {
-                    projects.map((project) => (
-                        <article class="group">
-                            <a
-                                href={project.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="block p-4 -mx-4 rounded-lg hover:bg-stone-100 dark:hover:bg-slate-900/50 transition-colors"
-                            >
-                                <div class="flex gap-4">
-                                    {(project.image || project.gif) && (
-                                        <div class="relative w-32 sm:w-40 h-24 sm:h-28 flex-shrink-0 rounded-md overflow-hidden bg-stone-200 dark:bg-slate-800">
-                                            {project.image && (
-                                                <img
-                                                    src={project.image}
-                                                    alt={project.name}
-                                                    class={`absolute inset-0 w-full h-full object-cover ${project.gif ? 'group-hover:opacity-0' : ''} transition-opacity`}
-                                                    loading="lazy"
-                                                />
-                                            )}
-                                            {project.gif && (
-                                                <img
-                                                    src={project.gif}
-                                                    alt={`${project.name} demo`}
-                                                    class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity"
-                                                    loading="lazy"
-                                                />
-                                            )}
-                                        </div>
-                                    )}
-                                    <div class="flex-1 min-w-0">
-                                        <h3 class="text-lg font-medium text-stone-800 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors mb-1">
-                                            {project.name}
-                                        </h3>
-                                        <p class="text-stone-600 dark:text-stone-300 text-sm mb-2">{project.description}</p>
-                                        {project.details && (
-                                            <p class="text-stone-500 dark:text-slate-400 text-sm mb-3">{project.details}</p>
-                                        )}
-                                        <div class="flex flex-wrap gap-2">
-                                            {project.tech.map((t) => (
-                                                <span class="text-xs text-stone-600 dark:text-stone-400 bg-stone-200 dark:bg-slate-800 px-2 py-1 rounded">
-                                                    {t}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-                    ))
-                }
-            </div>
-        </section>
-
-        <footer class="text-stone-500 text-sm border-t border-stone-300 dark:border-slate-800 pt-8">
-            <p>© {new Date().getFullYear()} Daniel Frevel</p>
-        </footer>
-    </main>
+    <footer
+      class="text-stone-500 text-sm border-t border-stone-300 dark:border-slate-800 pt-8"
+    >
+      <p>© {new Date().getFullYear()} Daniel Frevel</p>
+    </footer>
+  </main>
 </Layout>
 
 <script>
-    document.getElementById("email-link")?.addEventListener("click", (e) => {
-        e.preventDefault();
-        const u = ["daniel", "frevel"].join("-");
-        const d = ["web", "de"].join(".");
-        window.location.href = "mailto:" + u + "@" + d;
-    });
+  document.getElementById("email-link")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const u = ["daniel", "frevel"].join("-");
+    const d = ["web", "de"].join(".");
+    window.location.href = "mailto:" + u + "@" + d;
+  });
 
-    const toggle = document.getElementById('theme-toggle');
-    const iconSun = document.getElementById('icon-sun');
-    const iconRain = document.getElementById('icon-rain');
-    const iconPause = document.getElementById('icon-pause');
-    const iconPlay = document.getElementById('icon-play');
-    const weatherTemp = document.getElementById('weather-temp');
-    const weatherDesc = document.getElementById('weather-desc');
+  const toggle = document.getElementById("theme-toggle");
+  const iconSun = document.getElementById("icon-sun");
+  const iconRain = document.getElementById("icon-rain");
+  const iconPause = document.getElementById("icon-pause");
+  const iconPlay = document.getElementById("icon-play");
+  const weatherTemp = document.getElementById("weather-temp");
+  const weatherDesc = document.getElementById("weather-desc");
 
-    const weatherStates = {
-        light: { minTemp: 18, maxTemp: 32, desc: 'sonnig' },
-        dark: { minTemp: 4, maxTemp: 14, desc: 'Regen' }
-    };
+  const weatherStates = {
+    light: { minTemp: 18, maxTemp: 32, desc: "sonnig" },
+    dark: { minTemp: 4, maxTemp: 14, desc: "Regen" },
+  };
 
-    let currentTemp = 0;
-    let targetTemp = 0;
-    let currentTheme: 'light' | 'dark' = 'light';
+  let currentTemp = 0;
+  let targetTemp = 0;
+  let currentTheme: "light" | "dark" = "light";
 
-    function randomTemp(theme: 'light' | 'dark') {
-        const state = weatherStates[theme];
-        return state.minTemp + Math.random() * (state.maxTemp - state.minTemp);
+  function randomTemp(theme: "light" | "dark") {
+    const state = weatherStates[theme];
+    return state.minTemp + Math.random() * (state.maxTemp - state.minTemp);
+  }
+
+  function updateWeatherDisplay(theme: "light" | "dark", animate = true) {
+    currentTheme = theme;
+    targetTemp = randomTemp(theme);
+    weatherDesc!.textContent = weatherStates[theme].desc;
+
+    if (!animate) {
+      currentTemp = targetTemp;
+      weatherTemp!.textContent = Math.round(currentTemp).toString();
     }
+  }
 
-    function updateWeatherDisplay(theme: 'light' | 'dark', animate = true) {
-        currentTheme = theme;
-        targetTemp = randomTemp(theme);
-        weatherDesc!.textContent = weatherStates[theme].desc;
-
-        if (!animate) {
-            currentTemp = targetTemp;
-            weatherTemp!.textContent = Math.round(currentTemp).toString();
-        }
+  function animateTemp() {
+    if (Math.abs(currentTemp - targetTemp) > 0.1) {
+      currentTemp += (targetTemp - currentTemp) * 0.08;
+      weatherTemp!.textContent = Math.round(currentTemp).toString();
     }
+    requestAnimationFrame(animateTemp);
+  }
 
-    function animateTemp() {
-        if (Math.abs(currentTemp - targetTemp) > 0.1) {
-            currentTemp += (targetTemp - currentTemp) * 0.08;
-            weatherTemp!.textContent = Math.round(currentTemp).toString();
-        }
-        requestAnimationFrame(animateTemp);
-    }
+  setInterval(() => {
+    targetTemp = randomTemp(currentTheme);
+  }, 8000);
 
-    setInterval(() => {
-        targetTemp = randomTemp(currentTheme);
-    }, 8000);
+  function updateThemeIcons(dark: boolean) {
+    iconSun!.classList.toggle("hidden", !dark);
+    iconRain!.classList.toggle("hidden", dark);
+  }
 
-    function updateThemeIcons(dark: boolean) {
-        iconSun!.classList.toggle('hidden', !dark);
-        iconRain!.classList.toggle('hidden', dark);
-    }
+  function updatePauseIcons(paused: boolean) {
+    iconPause!.classList.toggle("hidden", paused);
+    iconPlay!.classList.toggle("hidden", !paused);
+  }
 
-    function updatePauseIcons(paused: boolean) {
-        iconPause!.classList.toggle('hidden', paused);
-        iconPlay!.classList.toggle('hidden', !paused);
-    }
+  const isDark = document.documentElement.classList.contains("dark");
+  updateWeatherDisplay(isDark ? "dark" : "light", false);
+  updateThemeIcons(isDark);
+  animateTemp();
 
-    const isDark = document.documentElement.classList.contains('dark');
-    updateWeatherDisplay(isDark ? 'dark' : 'light', false);
-    updateThemeIcons(isDark);
-    animateTemp();
+  toggle?.addEventListener("click", () => {
+    const nowDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", nowDark ? "dark" : "light");
+    updateThemeIcons(nowDark);
+    updateWeatherDisplay(nowDark ? "dark" : "light");
+    (window as any).startWeatherEffect?.(nowDark ? "dark" : "light");
+  });
 
-    toggle?.addEventListener('click', () => {
-        const nowDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', nowDark ? 'dark' : 'light');
-        updateThemeIcons(nowDark);
-        updateWeatherDisplay(nowDark ? 'dark' : 'light');
-        (window as any).startWeatherEffect?.(nowDark ? 'dark' : 'light');
-    });
+  const pauseBtn = document.getElementById("pause-toggle");
 
-    const pauseBtn = document.getElementById('pause-toggle');
-
-    pauseBtn?.addEventListener('click', () => {
-        const isPaused = (window as any).toggleWeatherPause?.();
-        updatePauseIcons(isPaused);
-    });
+  pauseBtn?.addEventListener("click", () => {
+    const isPaused = (window as any).toggleWeatherPause?.();
+    updatePauseIcons(isPaused);
+  });
 </script>
