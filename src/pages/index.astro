@@ -1,79 +1,120 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
 const projects = [
-  {
-    name: 'vps-infra',
-    description: 'Infrastructure-as-Code für meinen VPS mit Ansible, Docker Compose und Traefik',
-    tech: ['ansible', 'docker', 'traefik', 'wireguard'],
-    link: 'https://github.com/danielfrevel/vps-infra',
-  },
-  {
-    name: 'blog',
-    description: 'Persönlicher Tech-Blog auf Astro',
-    tech: ['astro', 'typescript', 'tailwind'],
-    link: 'https://blog.danfrevel.de',
-  },
+    {
+        name: "blog",
+        description: "Persönlicher Tech-Blog mit Hugo",
+        tech: ["Hugo", "typescript", "tailwind"],
+        link: "https://blog.danfrevel.de",
+    },
 ];
 
 const socials = [
-  { name: 'GitHub', url: 'https://github.com/danielfrevel', icon: 'gh' },
-  { name: 'LinkedIn', url: 'https://linkedin.com/in/danielfrevel', icon: 'li' },
-  { name: 'Email', url: 'mailto:daniel-frevel@web.de', icon: 'mail' },
+    { name: "GitHub", url: "https://github.com/danielfrevel" },
+    { name: "Email", url: "#", protected: true },
 ];
 ---
 
 <Layout title="Daniel Frevel">
-  <main class="min-h-screen max-w-2xl mx-auto px-6 py-16">
-    <header class="mb-16">
-      <h1 class="text-3xl font-semibold mb-2">Daniel Frevel</h1>
-      <p class="text-zinc-400 mb-6">Full-Stack Developer</p>
+    <main class="min-h-screen max-w-2xl mx-auto px-6 py-16">
+        <header class="mb-16">
+            <h1 class="text-3xl font-semibold mb-2">Daniel Frevel</h1>
 
-      <nav class="flex gap-4">
-        {socials.map((social) => (
-          <a
-            href={social.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-zinc-400 hover:text-zinc-100 transition-colors"
-          >
-            [{social.name}]
-          </a>
-        ))}
-      </nav>
-    </header>
+            <nav class="flex gap-4">
+                {
+                    socials.map((social) =>
+                        social.protected ? (
+                            <a
+                                href="#"
+                                id="email-link"
+                                class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors cursor-pointer"
+                            >
+                                [{social.name}]
+                            </a>
+                        ) : (
+                            <a
+                                href={social.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                            >
+                                [{social.name}]
+                            </a>
+                        ),
+                    )
+                }
+                <button id="theme-toggle" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                    [<span id="toggle-text">sun</span>]
+                </button>
+                <button id="pause-toggle" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                    [<span id="pause-text">pause</span>]
+                </button>
+            </nav>
+        </header>
 
-    <section id="projects" class="mb-16">
-      <h2 class="text-xl font-semibold mb-8 text-zinc-300">Projekte</h2>
+        <section id="projects" class="mb-16">
+            <h2 class="text-xl font-semibold mb-8 text-zinc-700 dark:text-zinc-300">Projekte</h2>
 
-      <div class="space-y-8">
-        {projects.map((project) => (
-          <article class="group">
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block"
-            >
-              <h3 class="text-lg font-medium text-zinc-100 group-hover:text-emerald-400 transition-colors mb-1">
-                {project.name}
-              </h3>
-              <p class="text-zinc-400 text-sm mb-2">{project.description}</p>
-              <div class="flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span class="text-xs text-zinc-500 bg-zinc-900 px-2 py-1 rounded">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </a>
-          </article>
-        ))}
-      </div>
-    </section>
+            <div class="space-y-8">
+                {
+                    projects.map((project) => (
+                        <article class="group">
+                            <a
+                                href={project.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="block"
+                            >
+                                <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors mb-1">
+                                    {project.name}
+                                </h3>
+                                <p class="text-zinc-600 dark:text-zinc-400 text-sm mb-2">{project.description}</p>
+                                <div class="flex flex-wrap gap-2">
+                                    {project.tech.map((t) => (
+                                        <span class="text-xs text-zinc-500 bg-zinc-200 dark:bg-zinc-900 px-2 py-1 rounded">
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+                            </a>
+                        </article>
+                    ))
+                }
+            </div>
+        </section>
 
-    <footer class="text-zinc-500 text-sm border-t border-zinc-800 pt-8">
-      <p>© {new Date().getFullYear()} Daniel Frevel</p>
-    </footer>
-  </main>
+        <footer class="text-zinc-500 text-sm border-t border-zinc-300 dark:border-zinc-800 pt-8">
+            <p>© {new Date().getFullYear()} Daniel Frevel</p>
+        </footer>
+    </main>
 </Layout>
+
+<script>
+    document.getElementById("email-link")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        const u = ["daniel", "frevel"].join("-");
+        const d = ["web", "de"].join(".");
+        window.location.href = "mailto:" + u + "@" + d;
+    });
+
+    const toggle = document.getElementById('theme-toggle');
+    const text = document.getElementById('toggle-text');
+
+    text!.textContent = document.documentElement.classList.contains('dark') ? 'sun' : 'rain';
+
+    toggle?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        text!.textContent = isDark ? 'sun' : 'rain';
+        (window as any).startWeatherEffect?.(isDark ? 'dark' : 'light');
+    });
+
+    const pauseBtn = document.getElementById('pause-toggle');
+    const pauseText = document.getElementById('pause-text');
+
+    pauseBtn?.addEventListener('click', () => {
+        const isPaused = (window as any).toggleWeatherPause?.();
+        pauseText!.textContent = isPaused ? 'play' : 'pause';
+    });
+</script>
