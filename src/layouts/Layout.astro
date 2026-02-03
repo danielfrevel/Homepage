@@ -23,7 +23,7 @@ const { title } = Astro.props;
       document.documentElement.classList.toggle('dark', t === 'dark');
     </script>
   </head>
-  <body class="bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-mono antialiased">
+  <body class="bg-amber-50 dark:bg-slate-950 text-stone-800 dark:text-stone-100 font-mono antialiased transition-colors duration-700">
     <canvas id="weather" class="fixed inset-0 pointer-events-none z-0"></canvas>
     <div class="relative z-10">
       <slot />
@@ -45,6 +45,11 @@ const reducedMotion = matchMedia('(prefers-reduced-motion:reduce)').matches;
 let currentFrame: number | null = null;
 let paused = false;
 
+let currentMode: 'rain' | 'sun' = 'sun';
+let transition = 0;
+let transitionTarget: 'rain' | 'sun' | null = null;
+const TRANSITION_SPEED = 0.02;
+
 function resize() {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
@@ -52,12 +57,17 @@ function resize() {
 resize();
 addEventListener('resize', resize);
 
-// Rain effect
+// Rain state
 const CHARS = '||||||||/\\'.split('');
 const SIZE = 14;
 let drops: {x:number,y:number,c:string,s:number,o:number}[] = [];
 let flash = 0;
 let bolts: {points:{x:number,y:number}[],o:number}[] = [];
+
+// Sun state
+let sunTime = 0;
+let motes: {x:number,y:number,s:number,o:number,dx:number,dy:number}[] = [];
+const RAY_COUNT = 12;
 
 function createBolt(startX: number) {
   const points = [{x: startX, y: 0}];
@@ -95,8 +105,8 @@ function drawBolt(points: {x:number,y:number}[], opacity: number) {
   ctx.shadowBlur = 0;
 }
 
-function runRain() {
-  if (Math.random() < 0.05 && drops.length < 120) {
+function updateRain(alpha: number) {
+  if (alpha > 0.3 && Math.random() < 0.05 && drops.length < 120) {
     drops.push({
       x: Math.random() * canvas.width,
       y: -SIZE,
@@ -106,59 +116,46 @@ function runRain() {
     });
   }
 
-  if (bolts.length === 0 && Math.random() < 0.0075) {
+  if (alpha > 0.5 && bolts.length === 0 && Math.random() < 0.0075) {
     bolts.push({points: createBolt(Math.random() * canvas.width), o: 1});
     flash = 0.25;
   }
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   if (flash > 0) {
-    ctx.fillStyle = `rgba(150,150,170,${flash})`;
+    ctx.fillStyle = `rgba(150,150,170,${flash * alpha})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     flash *= 0.85;
     if (flash < 0.005) flash = 0;
   }
 
   bolts = bolts.filter(b => {
-    drawBolt(b.points, b.o);
+    drawBolt(b.points, b.o * alpha);
     b.o *= 0.9;
     return b.o > 0.05;
   });
 
   ctx.font = `${SIZE}px "JetBrains Mono",monospace`;
   drops = drops.filter(d => {
-    ctx.fillStyle = `rgba(113,113,122,${d.o})`;
+    ctx.fillStyle = `rgba(113,113,122,${d.o * alpha})`;
     ctx.fillText(d.c, d.x, d.y);
     d.y += d.s;
     return d.y < canvas.height + SIZE;
   });
-
-  if (!paused) currentFrame = requestAnimationFrame(runRain);
 }
 
-// Sun effect
-let sunTime = 0;
-let motes: {x:number,y:number,s:number,o:number,dx:number,dy:number}[] = [];
-const RAY_COUNT = 12;
-
-function runSun() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function updateSun(alpha: number) {
   sunTime += 0.016;
-
   const sunX = canvas.width + 80;
   const sunY = -80;
 
-  // Sun glow
   const glowGrad = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 350);
-  glowGrad.addColorStop(0, 'rgba(251, 191, 36, 0.25)');
-  glowGrad.addColorStop(0.5, 'rgba(251, 191, 36, 0.08)');
+  glowGrad.addColorStop(0, `rgba(251, 191, 36, ${0.25 * alpha})`);
+  glowGrad.addColorStop(0.5, `rgba(251, 191, 36, ${0.08 * alpha})`);
   glowGrad.addColorStop(1, 'rgba(251, 191, 36, 0)');
   ctx.fillStyle = glowGrad;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Rays
-  const baseOpacity = 0.18 + Math.sin(sunTime) * 0.04;
+  const baseOpacity = (0.18 + Math.sin(sunTime) * 0.04) * alpha;
   for (let i = 0; i < RAY_COUNT; i++) {
     const angle = (Math.PI * 0.4) + (Math.PI * 0.9) * (i / (RAY_COUNT - 1));
     const length = 500 + Math.sin(sunTime * 0.8 + i * 0.5) * 80;
@@ -188,8 +185,7 @@ function runSun() {
     ctx.fill();
   }
 
-  // Dust motes / sparkles
-  if (Math.random() < 0.07 && motes.length < 50) {
+  if (alpha > 0.3 && Math.random() < 0.07 && motes.length < 50) {
     motes.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -204,41 +200,69 @@ function runSun() {
     const twinkle = 0.75 + Math.sin(sunTime * 2 + m.x * 0.01) * 0.25;
     ctx.beginPath();
     ctx.arc(m.x, m.y, m.s, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(251, 191, 36, ${m.o * twinkle})`;
+    ctx.fillStyle = `rgba(251, 191, 36, ${m.o * twinkle * alpha})`;
     ctx.fill();
     m.x += m.dx;
     m.y += m.dy;
     m.o -= 0.001;
     return m.o > 0 && m.y > -10 && m.x > -10 && m.x < canvas.width + 10;
   });
+}
 
-  if (!paused) currentFrame = requestAnimationFrame(runSun);
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (transitionTarget) {
+    transition += TRANSITION_SPEED;
+    if (transition >= 1) {
+      transition = 0;
+      currentMode = transitionTarget;
+      transitionTarget = null;
+    }
+  }
+
+  let rainAlpha = 0, sunAlpha = 0;
+
+  if (transitionTarget) {
+    if (transitionTarget === 'rain') {
+      sunAlpha = 1 - transition;
+      rainAlpha = transition;
+    } else {
+      rainAlpha = 1 - transition;
+      sunAlpha = transition;
+    }
+  } else {
+    rainAlpha = currentMode === 'rain' ? 1 : 0;
+    sunAlpha = currentMode === 'sun' ? 1 : 0;
+  }
+
+  if (sunAlpha > 0) updateSun(sunAlpha);
+  if (rainAlpha > 0) updateRain(rainAlpha);
+
+  if (!paused) currentFrame = requestAnimationFrame(render);
 }
 
 function startEffect(theme: string) {
-  if (currentFrame) cancelAnimationFrame(currentFrame);
-  drops = [];
-  bolts = [];
-  flash = 0;
-  motes = [];
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const target = theme === 'dark' ? 'rain' : 'sun';
+  if (target === currentMode && !transitionTarget) return;
+  transitionTarget = target;
+  transition = 0;
+}
 
+function initEffect(theme: string) {
+  currentMode = theme === 'dark' ? 'rain' : 'sun';
   if (reducedMotion) return;
-  theme === 'dark' ? runRain() : runSun();
+  render();
 }
 
 function togglePause(): boolean {
   paused = !paused;
-  if (!paused && !reducedMotion) {
-    const isDark = document.documentElement.classList.contains('dark');
-    isDark ? runRain() : runSun();
-  }
+  if (!paused && !reducedMotion) render();
   return paused;
 }
 
-// Init and expose for toggle
 const isDark = document.documentElement.classList.contains('dark');
-startEffect(isDark ? 'dark' : 'light');
+initEffect(isDark ? 'dark' : 'light');
 
 (window as any).startWeatherEffect = startEffect;
 (window as any).toggleWeatherPause = togglePause;
