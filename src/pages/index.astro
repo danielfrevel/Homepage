@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const projects = [
+  {
+    name: 'vps-infra',
+    description: 'Infrastructure-as-Code für meinen VPS mit Ansible, Docker Compose und Traefik',
+    tech: ['ansible', 'docker', 'traefik', 'wireguard'],
+    link: 'https://github.com/danielfrevel/vps-infra',
+  },
+  {
+    name: 'blog',
+    description: 'Persönlicher Tech-Blog auf Astro',
+    tech: ['astro', 'typescript', 'tailwind'],
+    link: 'https://blog.danfrevel.de',
+  },
+];
+
+const socials = [
+  { name: 'GitHub', url: 'https://github.com/danielfrevel', icon: 'gh' },
+  { name: 'LinkedIn', url: 'https://linkedin.com/in/danielfrevel', icon: 'li' },
+  { name: 'Email', url: 'mailto:daniel-frevel@web.de', icon: 'mail' },
+];
+---
+
+<Layout title="Daniel Frevel">
+  <main class="min-h-screen max-w-2xl mx-auto px-6 py-16">
+    <header class="mb-16">
+      <h1 class="text-3xl font-semibold mb-2">Daniel Frevel</h1>
+      <p class="text-zinc-400 mb-6">Full-Stack Developer</p>
+
+      <nav class="flex gap-4">
+        {socials.map((social) => (
+          <a
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-zinc-400 hover:text-zinc-100 transition-colors"
+          >
+            [{social.name}]
+          </a>
+        ))}
+      </nav>
+    </header>
+
+    <section id="projects" class="mb-16">
+      <h2 class="text-xl font-semibold mb-8 text-zinc-300">Projekte</h2>
+
+      <div class="space-y-8">
+        {projects.map((project) => (
+          <article class="group">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block"
+            >
+              <h3 class="text-lg font-medium text-zinc-100 group-hover:text-emerald-400 transition-colors mb-1">
+                {project.name}
+              </h3>
+              <p class="text-zinc-400 text-sm mb-2">{project.description}</p>
+              <div class="flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span class="text-xs text-zinc-500 bg-zinc-900 px-2 py-1 rounded">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <footer class="text-zinc-500 text-sm border-t border-zinc-800 pt-8">
+      <p>© {new Date().getFullYear()} Daniel Frevel</p>
+    </footer>
+  </main>
+</Layout>
