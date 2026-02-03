@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Personal portfolio website built with Astro 5 + Tailwind CSS. Static site deployed via Docker/Nginx.
+Personal homepage built with Astro 5 + Tailwind CSS. Static site deployed via Docker/Nginx.
 
 ## Commands
 
@@ -16,7 +16,7 @@ npm run preview  # Preview production build
 
 ## Architecture
 
-- `src/pages/` - Astro pages (index.astro is main portfolio)
+- `src/pages/` - Astro pages (index.astro is main page)
 - `src/layouts/Layout.astro` - Base HTML template
 - `public/` - Static assets
 - Path alias: `@/*` → `src/*`
