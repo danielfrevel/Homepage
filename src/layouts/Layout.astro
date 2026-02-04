@@ -138,7 +138,7 @@ function updateRain(alpha: number) {
     });
   }
 
-  if (alpha > 0.5 && bolts.length === 0 && Math.random() < 0.0075) {
+  if (alpha > 0.5 && bolts.length === 0 && Math.random() < 0.003) {
     const bolt = createBolt(Math.random() * canvas.width);
     bolts.push({points: bolt.points, o: 1});
     flash = bolt.hitType !== 'none' ? 0.35 : 0.25;
@@ -217,7 +217,7 @@ function updateRain(alpha: number) {
 }
 
 function updateSun(alpha: number) {
-  sunTime += 0.016;
+  sunTime += 0.006;
   const sunX = canvas.width + 80;
   const sunY = -80;
 
