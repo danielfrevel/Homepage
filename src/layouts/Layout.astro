@@ -44,6 +44,7 @@ const reducedMotion = matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 let currentFrame: number | null = null;
 let paused = false;
+let lastTime = performance.now();
 
 let currentMode: 'rain' | 'sun' = 'sun';
 let transition = 0;
@@ -126,7 +127,7 @@ function drawBolt(points: {x:number,y:number}[], opacity: number) {
   ctx.shadowBlur = 0;
 }
 
-function updateRain(alpha: number) {
+function updateRain(alpha: number, dt: number) {
   if (alpha > 0.3 && Math.random() < 0.08 && drops.length < 150) {
     drops.push({
       x: Math.random() * canvas.width,
@@ -171,13 +172,13 @@ function updateRain(alpha: number) {
   if (flash > 0) {
     ctx.fillStyle = `rgba(150,150,170,${flash * alpha})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    flash *= 0.85;
+    flash *= Math.pow(0.85, dt);
     if (flash < 0.005) flash = 0;
   }
 
   bolts = bolts.filter(b => {
     drawBolt(b.points, b.o * alpha);
-    b.o *= 0.9;
+    b.o *= Math.pow(0.9, dt);
     return b.o > 0.05;
   });
 
@@ -194,15 +195,15 @@ function updateRain(alpha: number) {
       ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(220,220,255,${s.o * alpha})`;
       ctx.fill();
-      s.x += s.vx;
-      s.y += s.vy;
-      s.vy += 0.15;
-      s.o -= 0.03;
+      s.x += s.vx * dt;
+      s.y += s.vy * dt;
+      s.vy += 0.15 * dt;
+      s.o -= 0.03 * dt;
       return s.o > 0 && s.y < canvas.height + 10;
     });
 
-    imp.r += 3;
-    imp.o -= 0.04;
+    imp.r += 3 * dt;
+    imp.o -= 0.04 * dt;
     return imp.o > 0 || imp.sparks.length > 0;
   });
 
@@ -210,14 +211,14 @@ function updateRain(alpha: number) {
   drops = drops.filter(d => {
     ctx.fillStyle = `rgba(113,113,122,${d.o * alpha})`;
     ctx.fillText(d.c, d.x, d.y);
-    d.y += d.s;
-    d.s = Math.min(d.s + d.a, MAX_SPEED);
+    d.y += d.s * dt;
+    d.s = Math.min(d.s + d.a * dt, MAX_SPEED);
     return d.y < canvas.height + SIZE;
   });
 }
 
-function updateSun(alpha: number) {
-  sunTime += 0.006;
+function updateSun(alpha: number, dt: number) {
+  sunTime += 0.006 * dt;
   const sunX = canvas.width + 80;
   const sunY = -80;
 
@@ -275,18 +276,22 @@ function updateSun(alpha: number) {
     ctx.arc(m.x, m.y, m.s, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(251, 191, 36, ${m.o * twinkle * alpha})`;
     ctx.fill();
-    m.x += m.dx;
-    m.y += m.dy;
-    m.o -= 0.001;
+    m.x += m.dx * dt;
+    m.y += m.dy * dt;
+    m.o -= 0.001 * dt;
     return m.o > 0 && m.y > -10 && m.x > -10 && m.x < canvas.width + 10;
   });
 }
 
 function render() {
+  const now = performance.now();
+  const dt = (now - lastTime) / 16.67;
+  lastTime = now;
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (transitionTarget) {
-    transition += TRANSITION_SPEED;
+    transition += TRANSITION_SPEED * dt;
     if (transition >= 1) {
       transition = 0;
       currentMode = transitionTarget;
@@ -309,8 +314,8 @@ function render() {
     sunAlpha = currentMode === 'sun' ? 1 : 0;
   }
 
-  if (sunAlpha > 0) updateSun(sunAlpha);
-  if (rainAlpha > 0) updateRain(rainAlpha);
+  if (sunAlpha > 0) updateSun(sunAlpha, dt);
+  if (rainAlpha > 0) updateRain(rainAlpha, dt);
 
   if (!paused) currentFrame = requestAnimationFrame(render);
 }
