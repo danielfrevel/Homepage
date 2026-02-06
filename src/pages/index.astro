@@ -3,24 +3,17 @@ import Layout from "../layouts/Layout.astro";
 
 const projects = [
   {
-    name: "",
-    description: "",
-    details: "",
-    tech: ["typescript", "tailwind"],
-    link: "",
-    image: "",
-    gif: "",
+    name: "Blog",
+    description: "Blog?, C#, Angular und was sonst gerade kaputt ist.",
+    tech: ["Hugo", "Tailwind"],
+    link: "https://blog.danfrevel.de",
   },
-  //   {
-  //     name: "blog",
-  //     description: "Persönlicher Tech-Blog mit Hugo",
-  //     details:
-  //       "Minimalistischer Blog für Tech-Artikel und Notizen. Statisch generiert, schnell und ohne Tracking.",
-  //     tech: ["Hugo", "typescript", "tailwind"],
-  //     link: "https://blog.danfrevel.de",
-  //     image: "/projects/blog.png",
-  //     gif: "/projects/blog.gif",
-  //   },
+  {
+    name: "Klopf",
+    description: "Multiplayer-Kartenspiel mit Websockets Fullstack Typescript.",
+    tech: ["Angular", "Bun", "DaisyUI"],
+    link: "game.danfrevel.de",
+  },
 ];
 
 const socials = [
@@ -164,47 +157,21 @@ const socials = [
                 rel="noopener noreferrer"
                 class="block p-4 -mx-4 rounded-lg hover:bg-stone-100 dark:hover:bg-slate-900/50 transition-colors"
               >
-                <div class="flex gap-4">
-                  {(project.image || project.gif) && (
-                    <div class="relative w-32 sm:w-40 h-24 sm:h-28 flex-shrink-0 rounded-md overflow-hidden bg-stone-200 dark:bg-slate-800">
-                      {project.image && (
-                        <img
-                          src={project.image}
-                          alt={project.name}
-                          class={`absolute inset-0 w-full h-full object-cover ${project.gif ? "group-hover:opacity-0" : ""} transition-opacity`}
-                          loading="lazy"
-                        />
-                      )}
-                      {project.gif && (
-                        <img
-                          src={project.gif}
-                          alt={`${project.name} demo`}
-                          class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
-                  )}
-                  <div class="flex-1 min-w-0">
-                    <h3 class="text-lg font-medium text-stone-800 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors mb-1">
-                      {project.name}
-                    </h3>
-                    <p class="text-stone-600 dark:text-stone-300 text-sm mb-2">
-                      {project.description}
-                    </p>
-                    {project.details && (
-                      <p class="text-stone-500 dark:text-slate-400 text-sm mb-3">
-                        {project.details}
-                      </p>
-                    )}
-                    <div class="flex flex-wrap gap-2">
-                      {project.tech.map((t) => (
-                        <span class="text-xs text-stone-600 dark:text-stone-400 bg-stone-200 dark:bg-slate-800 px-2 py-1 rounded">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <h3 class="text-lg font-medium text-stone-800 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                    {project.name}
+                  </h3>
+                  <span class="text-stone-400 dark:text-slate-600 text-sm">↗</span>
+                </div>
+                <p class="text-stone-600 dark:text-stone-300 text-sm mb-3">
+                  {project.description}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  {project.tech.map((t) => (
+                    <span class="text-xs text-stone-600 dark:text-stone-400 bg-stone-200 dark:bg-slate-800 px-2 py-1 rounded">
+                      {t}
+                    </span>
+                  ))}
                 </div>
               </a>
             </article>
